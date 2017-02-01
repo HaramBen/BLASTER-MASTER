@@ -24,6 +24,7 @@ namespace BlasterMaster
         private int[] pivotX = new int[129];
         private int[] pivotY = new int[129];
         private int firePower;
+        private int sanicTime;
         private int sheildTime;
         private int x3FireAmmo;
         private int x5FireAmmo;
@@ -33,6 +34,7 @@ namespace BlasterMaster
         private int sheildAni;
         private int warpW;
         private int warpH;
+        private bool sanic;
         private bool sheild;
         private bool warp;
         private bool dead;
@@ -164,7 +166,39 @@ namespace BlasterMaster
 
             return this.firePower;
         }
+        public bool hasSanic()
+        {
+            //------------------------------------------------------------------------------------------------------------------
+            // Purpose: Accessor (has the player got the sanic pickup?)  
+            //------------------------------------------------------------------------------------------------------------------
 
+            return this.sanic;
+        }
+        public void setSanic(bool sanic)
+        {
+            //------------------------------------------------------------------------------------------------------------------
+            // Purpose: Mutator (set player with / without sanic)  
+            //------------------------------------------------------------------------------------------------------------------
+
+            this.sanic = sanic;
+        }
+        public void setSanicTime(int sanicTime)
+        {
+            //------------------------------------------------------------------------------------------------------------------
+            // Purpose: Mutator (set player's time with having sanic speed)  
+            //------------------------------------------------------------------------------------------------------------------
+
+            this.sanicTime = sanicTime;
+        }
+
+        public int getSanicTime()
+        {
+            //------------------------------------------------------------------------------------------------------------------
+            // Purpose: Accessor (fetch the amount of time that the player has had sanic speed)  
+            //------------------------------------------------------------------------------------------------------------------
+
+            return this.sanicTime;
+        }
         public bool hasSheild()
         {
             //------------------------------------------------------------------------------------------------------------------
@@ -200,7 +234,7 @@ namespace BlasterMaster
 
             return this.sheildTime;
         }
-
+        
         public void setX3FireAmmo(int x3FireAmmo)
         {
             //------------------------------------------------------------------------------------------------------------------
@@ -400,7 +434,6 @@ namespace BlasterMaster
                     base.setRectH(player[1].Height - 20);
                     base.setRectX(base.getX() + 2);
                     base.setRectY(base.getY() + 20);
-
                     // Sheild?
                     if (this.hasSheild())
                     {
