@@ -882,11 +882,20 @@ namespace BlasterMaster
                 // Shift ship left or right at player's request
                 if (moveKeyPress[0])
                 {
+                    if (player.hasSanic() == true)
+                    {
+                        if (playerPivotPos > 5)
+                            playerPivotPos -= 6;
+                    }
                     if (playerPivotPos > 0)
                         playerPivotPos -= 1;
                 }
                 else if (moveKeyPress[1])
                 {
+                    if (player.hasSanic() == true) {
+                        if (playerPivotPos < 116)
+                            playerPivotPos += 6;
+                    }
                     if (playerPivotPos < 121)
                         playerPivotPos += 1;
                 }
@@ -913,7 +922,7 @@ namespace BlasterMaster
                                             case 1: //:: x1 fire ::
 
                                                 // Create new instances
-                                                playerbullet[i, 0] = new clsPlayerMyBullet(x - 2, y);
+                                                playerbullet[i, 0] = new clsPlayerBullet(x - 2, y);
 
                                                 // Bail out
                                                 bailOut = true;
@@ -1280,7 +1289,7 @@ namespace BlasterMaster
                                                 {
                                                     // Fetch random pickup to drop
                                                     bool voidPickup = false;
-                                                    c = getRandomNumber(0, 3);
+                                                    c = getRandomNumber(0, 5);
 
                                                     switch (c)
                                                     {
@@ -1311,6 +1320,21 @@ namespace BlasterMaster
                                                             {
                                                                 voidPickup = true;
                                                             }
+                                                            break;
+                                                        case 3: //:: Sanic Speed ::
+                                                            // Void if player already has it
+                                                            if (player.hasSanic())
+                                                            {
+                                                                voidPickup = true;
+                                                            }
+                                                            break;
+                                                        case 4: //:: Extra Life ::
+                                                            // Void if player has 6 lives
+                                                            if (lives >= 4)
+                                                            {
+                                                                voidPickup = true;
+                                                            }
+                                                            
                                                             break;
                                                     }
 
@@ -1358,6 +1382,8 @@ namespace BlasterMaster
 
                         // Sheild off
                         player.setSheild(false);
+                        // Sanic off
+                        player.setSanic(false);
 
                         //bail
                         return;
@@ -1375,7 +1401,16 @@ namespace BlasterMaster
             // 2. X3 fire which gives the player 20 shots
             // 3. X5 fire which gives the player 15 shots
             //------------------------------------------------------------------------------------------------------------------
-
+           
+            // The player can hold max light speed for 10 secs before they lose it
+            if (player.hasSanic())
+            {
+                player.setSanicTime(player.getSanicTime() + 1);
+                if (player.getSanicTime() > 500)
+                {
+                    player.setSanic(false);
+                }
+            }
             // The player can hold a sheild for 10 secs before they lose it
             if (player.hasSheild())
             {
@@ -1447,6 +1482,10 @@ namespace BlasterMaster
                             case 2: // x5 power
                                 player.setFirePower(5);
                                 player.setX5FireAmmo(5);
+                                break;
+                            case 3: // Sanic Speed
+                                player.setSanic(true);
+                                player.setSanicTime(0);
                                 break;
                         }
 
@@ -1929,6 +1968,24 @@ namespace BlasterMaster
             DrawText(graphicsBuffer, "Firepower: " + s, 12, 702, 14, FontStyle.Regular, Brushes.Black);
             DrawText(graphicsBuffer, "Firepower: " + s, 10, 700, 14, FontStyle.Regular, Brushes.White);
 
+            // Sanic Speed 
+            switch (player.hasSanic())
+            {
+                case true:
+                    i = player.getSanicTime();
+                    j = Convert.ToInt32(10 - (i / 50));
+                    s = j.ToString() + " Sec Remaining";
+
+                    break;
+                case false:
+                    s = "Not Acquired";
+                    break;
+            }
+
+            // Render
+            DrawText(graphicsBuffer, "Sanic Speed: " + " " + s, 346, 677, 14, FontStyle.Regular, Brushes.Black);
+            DrawText(graphicsBuffer, "Sanic Speed: " + " " + s, 348, 675, 14, FontStyle.Regular, Brushes.White);
+           
             // Sheild 
             switch (player.hasSheild())
             {
@@ -1944,8 +2001,8 @@ namespace BlasterMaster
             }
 
             // Render
-            DrawText(graphicsBuffer, "Sheild: " + " " + s, 366, 702, 14, FontStyle.Regular, Brushes.Black);
-            DrawText(graphicsBuffer, "Sheild: " + " " + s, 368, 700, 14, FontStyle.Regular, Brushes.White);
+            DrawText(graphicsBuffer, "Sheild: " + " " + s, 346, 702, 14, FontStyle.Regular, Brushes.Black);
+            DrawText(graphicsBuffer, "Sheild: " + " " + s, 348, 700, 14, FontStyle.Regular, Brushes.White);
 
         }
 
