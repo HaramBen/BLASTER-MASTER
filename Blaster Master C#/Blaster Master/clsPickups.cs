@@ -37,6 +37,12 @@ namespace BlasterMaster
                 case 2:
                     pickup = BlasterMaster.Properties.Resources.pickupC;
                     break;
+                case 3:
+                    pickup = BlasterMaster.Properties.Resources.pickupD;
+                    break;
+                case 4:
+                    pickup = BlasterMaster.Properties.Resources.pickupE;
+                    break;
             }
 
             // Remove background
