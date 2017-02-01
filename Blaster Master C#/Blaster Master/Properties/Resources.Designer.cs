@@ -343,6 +343,26 @@ namespace BlasterMaster.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pickupD {
+            get {
+                object obj = ResourceManager.GetObject("pickupD", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pickupE {
+            get {
+                object obj = ResourceManager.GetObject("pickupE", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap playerA {
             get {
                 object obj = ResourceManager.GetObject("playerA", resourceCulture);
